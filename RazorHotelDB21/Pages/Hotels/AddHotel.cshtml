@@ -1,0 +1,20 @@
+﻿@page
+@model RazorPageHotelApp.Pages.Hotels.AddHotelModel
+@{
+    // side til at ligge et nyt hotel ind tå databasen // 
+}
+<form method="post">
+    <div class="form-group">
+        <label asp-for="@Model.Hotel.HotelNr" class="custom-control-label"></label>
+        <input type="number" asp-for="@Model.Hotel.HotelNr" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Hotel.Navn" class="custom-control-label"></label>
+        <input asp-for="@Model.Hotel.Navn" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Hotel.Adresse" class="custom-control-label"></label>
+        <input asp-for="@Model.Hotel.Adresse" class="form-control" />
+    </div>
+    <input type="submit" value="create" class="btn btn-primary" />
+</form>

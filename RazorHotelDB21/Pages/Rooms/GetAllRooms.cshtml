@@ -1,0 +1,69 @@
+﻿@page
+@model RazorPageHotelApp.Pages.Rooms.GetAllRoomsModel
+@{
+}
+<h4 style="color:aquamarine"> List of rooms</h4>
+
+<form method="post" asp-page-handler="search">
+    <p>
+        Search:    <input type="checkbox" name="TypeSwitch" value="on" checked="" />  <select name="type">
+            <option value=""></option>
+            <option value="S">S</option>
+            <option value="D">D</option>
+            <option value="F">F</option>
+        </select>
+        <input type="checkbox" name="PriceSwitch" value="on" checked="" />
+        <input type="number" name="pris" />
+        <input type="hidden" name="hotelNr" value="@Model.HotelNo" />
+        <input type="submit" />
+    </p>
+</form>
+<p class="@(Model.Message=="Error")">Der var en fejl i din søgning</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Room No
+            </th>
+            <th>
+                Type
+            </th>
+            <th>
+                Pris
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Rooms.Count() != 0)
+        {
+            @foreach (var item in Model.Rooms)
+            {
+                <tr>
+                    <td>
+                        @item.Room_No
+                    </td>
+                    <td>
+                        @item.Types
+                    </td>
+                    <td>
+                        @item.Price
+                    </td>
+                    <td>
+                        <form method="post" asp-page-handler="delete">
+                            <p>
+                                <button class="btn-primary">Delete</button>
+                                <input type="hidden" name="hotelNr" value="@item.Hotel_No" />
+                                <input type="hidden" name="roomNr" value="@item.Room_No">
+                            </p>
+                        </form>
+                    </td>
+                    <td>
+                        <p>
+                            <a asp-page="/Rooms/UpdateRoom" asp-route-id="@item.Room_No" asp-route-hid="@item.Hotel_No">Edit room</a>
+                        </p>
+                    </td>
+                </tr>
+            }
+        }
+</table>

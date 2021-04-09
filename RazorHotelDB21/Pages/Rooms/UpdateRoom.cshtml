@@ -1,0 +1,21 @@
+﻿@page
+@model RazorPageHotelApp.Pages.Rooms.UpdateRoomModel
+@{
+}
+<form method="post">
+    <input type="hidden" asp-for="Room.Hotel_No" />
+    <input type="hidden" asp-for="Room.Room_No" />
+    <div class="form-group">
+        <label asp-for="@Model.Room.Types" class="custom-control-label"></label>
+        <select asp-for="Room.Types">
+            <option value="S">S</option>
+            <option value="D">D</option>
+            <option value="F">F</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Room.Price" class="custom-control-label"></label>
+        <input type="number" asp-for="@Model.Room.Price" class="form-control" />
+    </div>
+    <input type="submit" value="update" class="btn btn-primary" />
+</form>
