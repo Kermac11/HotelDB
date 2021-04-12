@@ -15,6 +15,9 @@ using RazorHotelDB21.Services;
 
 namespace RazorPageHotelApp.Services
 {
+    /// <summary>
+    /// Service til at skabe, slette, og opdatere hotelrum
+    /// </summary>
     public class RoomService : Connection, IRoomService
     {
         private string queryString = "select * from Room";
@@ -30,11 +33,17 @@ namespace RazorPageHotelApp.Services
         private String queryStringFromTypeAndPrice = "select* from Room WHERE Hotel_No = @ID AND Types = @Type AND Price <= @Price";
 
         private String queryStringFromPrice = "select* from Room WHERE Hotel_No = @ID AND Price <= @Price";
-
+        /// <summary>
+        /// Constuctor til Rumservice
+        /// </summary>
+        /// <param name="configuration">Bstemmer hvilke service vi kan bruge i klassen</param>
         public RoomService(IConfiguration configuration) : base(configuration)
         {
         }
-
+        /// <summary>
+        /// Henter alle rum
+        /// </summary>
+        /// <returns>Aflevere en liste af alle rum</returns>
         public async Task<List<Room>> GetAllRoomAsync()
         {
             List<Room> Rooms = new List<Room>();
@@ -72,7 +81,11 @@ namespace RazorPageHotelApp.Services
 
             return Rooms;
         }
-
+        /// <summary>
+        /// Metode til at hente alle rum fra et bestemt hotel
+        /// </summary>
+        /// <param name="hotelNr">Hotelnummret vi henter rum udfra</param>
+        /// <returns>Aflevere en liste liste udfra hotelnummret</returns>
         public async Task<List<Room>> GetAllRoomFromHotelAsync(int hotelNr)
         {
             List<Room> Rooms = new List<Room>();
@@ -110,7 +123,12 @@ namespace RazorPageHotelApp.Services
 
             return Rooms;
         }
-
+        /// <summary>
+        /// Metode til at hente et bestemet rum udfra rumnummer og hotelnummer
+        /// </summary>
+        /// <param name="roomNr">Rumnummer vi søger efter</param>
+        /// <param name="hotelNr">Hotelnummer vi søger efter</param>
+        /// <returns>Aflevere rummet vi søger efter</returns>
         public async Task<Room> GetRoomFromIdAsync(int roomNr, int hotelNr)
         {
             Room room = null;
@@ -149,7 +167,12 @@ namespace RazorPageHotelApp.Services
 
             return room;
         }
-
+        /// <summary>
+        /// Metode til at skabe et rum hvordan de sættes ind i databasen
+        /// </summary>
+        /// <param name="hotelNr">Hotel nummeret hvor rummet skal sættes til</param>
+        /// <param name="room">Rum objektet der skal sættes ind i databasen</param>
+        /// <returns>Aflevere et ja eller nej svar om opgaven løses</returns>
         public async Task<bool> CreateRoomAsync(int hotelNr, Room room)
         {
             //(@RmID, @HtID, @Type, @Price)
@@ -185,7 +208,13 @@ namespace RazorPageHotelApp.Services
                 }
             }
         }
-
+        /// <summary>
+        /// Opdatere et bestemt hotelrum
+        /// </summary>
+        /// <param name="room">Rum objektet med de nye data der skal opdateres med</param>
+        /// <param name="roomNr">Hvilket rum skal opdateres</param>
+        /// <param name="hotelNr">Hvilket hotel rummet hører til</param>
+        /// <returns>Aflevere et ja eller nej svar om opgaven løses</returns>
         public async Task<bool> UpdateRoomAsync(Room room, int roomNr, int hotelNr)
         {
             //@type, Price = @price WHERE Hotel_No = @ID AND Room_No = @rmID
@@ -221,7 +250,12 @@ namespace RazorPageHotelApp.Services
                 }
             }
         }
-
+        /// <summary>
+        /// Metode til at slette et rum fra databasen
+        /// </summary>
+        /// <param name="roomNr">Rummet der skal slettes</param>
+        /// <param name="hotelNr">Hotel hvor rummet hører til</param>
+        /// <returns>Aflevere rummet der lige er blevet slettet</returns>
         public async Task<Room> DeleteRoomAsync(int roomNr, int hotelNr)
         {
             //Hotel_No = @ID AND Room_No = @rmID"
@@ -257,7 +291,13 @@ namespace RazorPageHotelApp.Services
                 return null;
             }
         }
-
+        /// <summary>
+        /// Metode til at henter flere rum udfra flere kriterier
+        /// </summary>
+        /// <param name="type">Hvilken type rummene er</param>
+        /// <param name="pris">Hvilken pris rummene der filtrers efter</param>
+        /// <param name="hotelnumber">Hotelnummeret rummene skal hentes fra</param>
+        /// <returns>Aflevere en liset af rum udfra kriterierne vi har sat</returns>
         public async Task<List<Room>> SearchForRoomFilterAsync(char type, int pris, int hotelnumber)
         {
             if (pris == 0)
@@ -302,7 +342,11 @@ namespace RazorPageHotelApp.Services
 
             return rooms;
         }
-
+        /// <summary>
+        /// Samme som SearchForRoomFilterAsync men med nogle andre løsninger
+        /// </summary>
+        /// <param name="searchlist">En liste af alle kriterierne</param>
+        /// <returns>Aflevere en liste udfra kriterierne</returns>
         public async Task<List<Room>> TestSearchRoomsAsync(List<KeyValuePair<string, object>> searchlist)
         {
             string querycommand = "select * from Room WHERE ";

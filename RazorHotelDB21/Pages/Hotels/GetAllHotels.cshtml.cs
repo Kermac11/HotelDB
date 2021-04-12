@@ -32,7 +32,11 @@ namespace RazorPageHotelApp.Pages.Hotels
             else
                 Hotels = await hotelService.GetAllHotelAsync();
         }
-
+        /// <summary>
+        /// Metode til at slette et hotel
+        /// </summary>
+        /// <param name="hotelNr">Hotel nummer der slettes</param>
+        /// <returns>Giver tilbage samme side</returns>
         public async Task<IActionResult> OnPostDeleteAsync(int hotelNr)
         {
           Hotel placeholder = await hotelService.DeleteHotelAsync(hotelNr);

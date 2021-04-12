@@ -6,6 +6,9 @@ using Microsoft.Extensions.Configuration;
 
 namespace RazorHotelDB21.Services
 {
+    /// <summary>
+    /// Klasse der bruger til at håndtere forbindelse til databasen
+    /// </summary>
     public abstract class Connection
     {
         protected String connectionString;

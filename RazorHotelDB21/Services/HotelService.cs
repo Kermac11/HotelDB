@@ -10,6 +10,9 @@ using RazorHotelDB21.Services;
 
 namespace RazorPageHotelApp.Services
 {
+    /// <summary>
+    /// Hotelservice der bruges til at skabe, slette og opdatere Hoteller
+    /// </summary>
     public class HotelService : Connection, IHotelService
     {
         private string queryString = "select * from Hotel";
@@ -19,10 +22,17 @@ namespace RazorPageHotelApp.Services
         private string updateSql = "UPDATE Hotel SET Name = @Name, Address = @Address  WHERE Hotel_No = @ID ;";
         private string getByName = "select * from Hotel where Name LIKE @name";
         // lav selv sql strengene færdige og lav gerne yderligere sqlstrings
+        /// <summary>
+        /// Constuctor til hotelservice
+        /// </summary>
+        /// <param name="configuration">Bstemmer hvilke service vi kan bruge i klassen</param>
         public HotelService(IConfiguration configuration) : base(configuration)
         {
         }
-
+        /// <summary>
+        /// Henter alle hoteller
+        /// </summary>
+        /// <returns>Giver en liste af alle hoteller</returns>
         public async Task<List<Hotel>> GetAllHotelAsync()
         {
             List<Hotel> hoteller = new List<Hotel>();
@@ -57,7 +67,11 @@ namespace RazorPageHotelApp.Services
 
             return hoteller;
         }
-
+        /// <summary>
+        /// Henter et bestemt hotel udfra hotel nummer
+        /// </summary>
+        /// <param name="hotelNr">Hotel nummeret vi bruger til at hente hotellet</param>
+        /// <returns>Aflevere hottlet</returns>
         public async Task<Hotel> GetHotelFromIdAsync(int hotelNr)
         {
             Hotel hotel = null;
@@ -93,7 +107,11 @@ namespace RazorPageHotelApp.Services
 
             return hotel;
         }
-
+        /// <summary>
+        /// Metode til at skabe et hotel
+        /// </summary>
+        /// <param name="hotel">Hotel objektet der skal lægges i databasen</param>
+        /// <returns>Giver et ja, nej svar på om opgave løses</returns>
         public async Task<bool> CreateHotelAsync(Hotel hotel)
         {
             await using (SqlConnection connection = new SqlConnection(connectionString))
@@ -127,7 +145,12 @@ namespace RazorPageHotelApp.Services
                 }
             }
         }
-
+        /// <summary>
+        /// Bruges til at opdatere et bestemt hotel
+        /// </summary>
+        /// <param name="hotel">Hotel objektet med data der skal opdatere et bestemt hotel</param>
+        /// <param name="hotelNr">Hvilket hotel de nye data skal lægges ind</param>
+        /// <returns>Giver et ja, nej svar på om opgave løses</returns>
         public async Task<bool> UpdateHotelAsync(Hotel hotel, int hotelNr)
         {
             await using (SqlConnection connection = new SqlConnection(connectionString))
@@ -161,7 +184,11 @@ namespace RazorPageHotelApp.Services
                 }
             }
         }
-
+        /// <summary>
+        /// Metode til at slette et hotel fra en database
+        /// </summary>
+        /// <param name="hotelNr">Hotel nummret der skal slettes i databasen</param>
+        /// <returns>Aflevere hotellet der er blevet slettet</returns>
         public async Task<Hotel> DeleteHotelAsync(int hotelNr)
         {
             Task<Hotel> waithotel = GetHotelFromIdAsync(hotelNr);
@@ -196,7 +223,11 @@ namespace RazorPageHotelApp.Services
                 return null;
             }
         }
-
+        /// <summary>
+        /// For fat i et bestemt hotel udfra navn
+        /// </summary>
+        /// <param name="name">Navn vi søger ud efter</param>
+        /// <returns>Aflevere hotellet vi søger efter</returns>
         public async Task<List<Hotel>> GetHotelsByNameAsync(string name)
         {
             List<Hotel> hotels = new List<Hotel>();

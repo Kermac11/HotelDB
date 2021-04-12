@@ -17,11 +17,20 @@ namespace RazorPageHotelApp.Pages.Rooms
         {
             _rs = roomservice;
         }
+        /// <summary>
+        /// Rum nummer der skal ændres
+        /// </summary>
+        /// <param name="id">Rum nummer der skal ændres</param>
+        /// <param name="hid">Hotel nummer hvor rummet hører til</param>
         public void OnGet(int id, int hid)
         {
             Room = _rs.GetRoomFromIdAsync(id, hid).Result;
         }
 
+        /// <summary>
+        /// Metoden der opdatere rummet 
+        /// </summary>
+        /// <returns>Sender brugeren tilbage til hotel siden hvor rummet hører til</returns>
         public async Task<IActionResult> OnPostAsync()
         {
             await _rs.UpdateRoomAsync(Room, Room.Room_No, Room.Hotel_No);

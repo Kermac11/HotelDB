@@ -21,7 +21,10 @@ namespace RazorPageHotelApp.Pages.Hotels
         {
             Hotel = await _hs.GetHotelFromIdAsync(id);
         }
-
+        /// <summary>
+        /// Metode til at updatere hotellet
+        /// </summary>
+        /// <returns>Sender bruger tilbage til Hotel Index side</returns>
         public async Task<IActionResult> OnPostAsync()
         {
             await _hs.UpdateHotelAsync(Hotel, Hotel.HotelNr);

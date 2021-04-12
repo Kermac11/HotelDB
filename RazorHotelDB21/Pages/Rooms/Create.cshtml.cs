@@ -23,7 +23,10 @@ namespace RazorPageHotelApp.Pages.Rooms
         {
             HotelNo = id;
         }
-
+        /// <summary>
+        /// Metode til at skabe nyt hotel og sende det ind i databasen
+        /// </summary>
+        /// <returns>Sender tilbage til hotel rum index side</returns>
         public async Task<IActionResult> OnPostAsync()
         {
             Room.Hotel_No = HotelNo;

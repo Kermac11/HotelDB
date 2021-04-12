@@ -23,18 +23,36 @@ namespace RazorPageHotelApp.Pages.Rooms
         public void OnGet()
         {
         }
+        /// <summary>
+        /// Metode til at hente alle rum i et bestemt hotel
+        /// </summary>
+        /// <param name="id">Hotel nummret hvor alle rum skal hentes/param>
         public void OnGetMyRooms(int id)
         {
             Rooms = _rs.GetAllRoomFromHotelAsync(id).Result;
             HotelNo = id;
         }
+        /// <summary>
+        /// Metode der sletter et rum i et hotel
+        /// </summary>
+        /// <param name="roomNr">Rum nummer der skal slettes</param>
+        /// <param name="hotelNr">Hotel nummeret hvor rummet hører til</param>
+        /// <returns>Giver tilbage samme side med nyt info</returns>
         public async Task<IActionResult> OnPostDeleteAsync(int roomNr, int hotelNr)
         {
             await _rs.DeleteRoomAsync(roomNr, hotelNr);
             OnGetMyRooms(hotelNr);
             return Page();
         }
-
+        /// <summary>
+        /// Metode til at filtrer hotelrum
+        /// </summary>
+        /// <param name="type">Hvilken type rummene der søges efter</param>
+        /// <param name="pris">Hvilken pris man vil søge efter</param>
+        /// <param name="hotelNr">Hotelnummer hvor rummne hører til</param>
+        /// <param name="TypeSwitch">skal sættes til on for at bruge det søge felt</param>
+        /// <param name="PriceSwitch">skal sættes til on for at bruge det søge felt</param>
+        /// <returns></returns>
         public async Task<IActionResult> OnPostSearchAsync(char type, double pris, int hotelNr, string TypeSwitch, string PriceSwitch)
         {
             //if (type != '\0' || pris != 0)
